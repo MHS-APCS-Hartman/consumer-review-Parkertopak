@@ -175,20 +175,20 @@ public class Review {
     for(int i = 0; i < file.length(); i++)
       {
         String letter = file.substring(i, i + 1);
-    if(letter.equals(space))
-      {
-        removePunctuation(word);
-        totalVal += sentimentVal(word);
-        word = "";
-      }
-    else
-{
-word += letter;
-}
-}
-removePunctuation(word);
-totalVal += sentimentVal(word);
-return totalVal;
-}
+        if(letter.equals(space))
+          {
+            removePunctuation(word);
+            totalVal += sentimentVal(word);
+            word = "";
+          }
+        else
+          {
+            word += letter;
+          }
+       }
+    removePunctuation(word);
+    totalVal += sentimentVal(word);
+    return totalVal;
+    }
 
 }
