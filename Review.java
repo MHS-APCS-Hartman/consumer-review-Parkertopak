@@ -165,4 +165,124 @@ public class Review {
       return randomNegativeAdj();
     }
   }
+  
+  
+  public static double totalSentiment(String fileName)
+      //This code will seach for all punctuation and replace it with no text, erasing all punctuation
+  {
+    String file = textToString(fileName);
+    String word = "";
+    String space = " ";
+    double totalVal = 0.0;
+    for(int i = 0; i < file.length(); i++)
+      {
+        String letter = file.substring(i, i + 1);
+        if(letter.equals(space))
+          {
+            removePunctuation(word);
+            totalVal += sentimentVal(word);
+            word = "";
+          }
+        else
+          {
+            word += letter;
+        }
+    }
+    removePunctuation(word);
+    totalVal += sentimentVal(word);
+    return totalVal;
+  }
+ 
+  
+  public static int starRating(String fileName)
+  {
+    int totalSentiment = (int) totalSentiment(fileName);
+    if(totalSentiment < 0)
+    {
+      return 1;
+    }
+    else if(totalSentiment < 5)
+    {
+      return 2;
+    }
+    else if(totalSentiment < 15)
+     {
+      return 3;
+     }
+    else
+     {
+       return 4;
+    }
+  }
+  
+  
+  public static String fakeReview(String fileName)
+     /*Searches for the "*" and starts the word that you need to replace.
+     Goes until you reach a space and replaces that word with a random adjective
+     Once it reaches the space,  it stops meeting the word condition and breaks
+     until it reaches another "*", it adds each character to the outputReview string.*/
+ {
+   String inputReview = textToString(fileName);
+   String word = "";
+   String outputReview = " ";
+   for(int i = 0; i < inputReview.length(); i++)
+   {
+     String letter = inputReview.substring(i, i+1);
+     if(letter.equals(" ")) //This is the end of the word
+     {
+       if(word.substring(0,1).equals("*")) 
+       {
+         word = randomAdjective();
+       }
+       outputReview += word + " "; 
+       word = "";
+     }
+     else
+     {
+       word += letter; 
+     }
+   return outputReview;
+   }
+ }
+
+  public static String fakeReviewStronger(String fileName)
+ {
+   String inputReview = textToString(fileName);
+   String word = "";
+   String outputReview = " ";
+   for(int i = 0; i < inputReview.length(); i++)
+   {
+     String letter = inputReview.substring(i, i+1);
+     if(letter.equals(" ")) //This is the end of the word
+     {
+       if(word.substring(0,1).equals("*")) //If the start of the word has a string than it replaces the word with an adjective
+       {
+         word = review.removePunctuation(word);
+         String prev = word;
+         word = randomAdjective();
+         if(totalSentiment > 0)
+         {
+           while(sentimentVal(word) < sentimentVal(prev))//If the adjective given has a positive output than its going to return as a positive number 
+           {
+            word = randomPositiveAdjective;
+           }
+         }
+         else if (totalSentiment < 0) //If the adjective given has a negative output than its going to return as a negative number 
+         {
+           while(sentimentVal(word) > sentimentVal(prev))
+           {
+             word = randomNegativeAdjective;
+           }
+         }
+       }
+       outputReview += word + " ";  //stores adjective in outputreview
+       word = "";
+     }
+     else
+     {
+       word += letter; //If code does not execute than the next letter is stored inside the word
+     }
+   return outputReview;
+   }
+ }
 }
