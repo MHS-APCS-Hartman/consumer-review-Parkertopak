@@ -166,7 +166,8 @@ public class Review {
     }
   }
   
-  public static double totalSentiment(String fileName)
+  public static double totalSentiment(String fileName) 
+    //This code will seach for all punctuation and replace it with no text, erasing all punctuation
   {
     String file = textToString(fileName);
     String word = "";
@@ -184,11 +185,11 @@ public class Review {
         else
           {
             word += letter;
-          }
-       }
+        }
+    }
     removePunctuation(word);
     totalVal += sentimentVal(word);
     return totalVal;
-    }
+  }
 
 }
