@@ -165,7 +165,7 @@ public class Review {
       return randomNegativeAdj();
     }
   }
-   public static String fakeReview(String fileName)
+   public static String fakeReviewStronger(String fileName)
  {
    String inputReview = textToString(fileName);
    String word = "";
@@ -180,6 +180,20 @@ public class Review {
          word = review.removePunctuation(word);
          String prev = word;
          word = randomAdjective();
+         if(totalSentiment > 0)
+         {
+           while(sentimentVal(word) < sentimentVal(prev))//If the adjective given has a positive output than its going to return as a positive number 
+           {
+            word = randomPositiveAdjective;
+           }
+         }
+         else if (totalSentiment < 0) //If the adjective given has a negative output than its going to return as a negative number 
+         {
+           while(sentimentVal(word) > sentimentVal(prev))
+           {
+             word = randomNegativeAdjective;
+           }
+         }
        }
        outputReview += word + " ";  //stores adjective in outputreview
        word = "";
