@@ -165,35 +165,29 @@ public class Review {
       return randomNegativeAdj();
     }
   }
-  public static String fakeReview(String fileName)
-  {
-     String review = textToString(fileName);
-    String fake = "";
-    
-    for(int i = 0; i < review.length()-1; i++)
-    {
-      if(review.substring(i, i+1).equals("*"))
-      {
-        i++;
-        String replace = "";
-        boolean isWord = true;
-        while(isWord)
-        {
-          i++;
-          if(review.substring(i, i+1).equals(" "))
-          {
-            isWord = false;
-          }
-        }
-        replace = randomAdjective() + " ";
-        fake += replace;
-      }
-      else
-      {
-        fake += review.substring(i, i+1);
-      }
-    }
-    return fake;
-  }
+ public static String fakeReview(String fileName)
+ {
+   String inputReview = textToString(fileName);
+   String word = "";
+   String outputReview = " ";
+   for(int i = 0; i < inputReview.length(); i++)
+   {
+     String letter = inputReview.substring(i, i+1);
+     if(letter.equals(" ")) //This is the end of the word
+     {
+       if(word.substring(0,1).equals("*")) //If the start of the word has a string than it replaces the word with an adjective
+       {
+         word = randomAdjective();
+       }
+       outputReview += word + " ";  //stores adjective in outputreview
+       word = "";
+     }
+     else
+     {
+       word += letter; //If code does not execute than the next letter is stored inside the word
+     }
+   return outputReview;
+   }
+ }
   
 }
